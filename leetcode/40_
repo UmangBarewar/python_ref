@@ -1,0 +1,24 @@
+class Solution:
+    def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
+        candidates.sort()
+        res=[]
+        def make_combo(idx,combo,total):
+            if target == total:
+                res.append(combo[:])
+                return
+            if total>target:
+                return
+            for i in range(idx, len(candidates)):
+                # Skip duplicates
+                if i > idx and candidates[i] == candidates[i - 1]:
+                    continue
+                
+                combo.append(candidates[i])
+                make_combo(i + 1, combo, total + candidates[i])
+                combo.pop()  # Backtrack to try next candidate
+        
+            return res
+        return make_combo(0,[],0)
+
+            
+        
